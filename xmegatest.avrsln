@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# AvrStudio Solution File, Format Version 11.00
+Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "xmegatest", "xmegatest\xmegatest.avrgccproj", "{43E8BF22-9937-4876-8168-1F7C3A7C64DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43E8BF22-9937-4876-8168-1F7C3A7C64DF}.Debug|AVR.ActiveCfg = Debug|AVR
+		{43E8BF22-9937-4876-8168-1F7C3A7C64DF}.Debug|AVR.Build.0 = Debug|AVR
+		{43E8BF22-9937-4876-8168-1F7C3A7C64DF}.Release|AVR.ActiveCfg = Release|AVR
+		{43E8BF22-9937-4876-8168-1F7C3A7C64DF}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
