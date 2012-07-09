@@ -108,5 +108,6 @@ void         CCP_RST( void );
 //                      Globals                       //
 ////////////////////////////////////////////////////////
 volatile uint16_t sine_frequency;
+volatile uint8_t  newrx;
 
 #endif

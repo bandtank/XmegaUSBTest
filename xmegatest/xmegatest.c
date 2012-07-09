@@ -5,9 +5,14 @@ int main(void)
 	MCU_Init();
 
 	FILE USB_stdout = FDEV_SETUP_STREAM (USB_Putchar, NULL, _FDEV_SETUP_WRITE);
-	fprintf(&USB_stdout,"I'm alive...");
+	fprintf(&USB_stdout,"I'm alive...\r\n");
 
-	for(;;);
+	for(;;) {
+		if(newrx) {
+			newrx = 0;
+			fprintf(&USB_stdout,"Sine Frequency = %u\r\n",sine_frequency);
+		}
+	}
 }
 
 //Setup MCU pins and peripheral systems
@@ -24,12 +29,13 @@ void MCU_Init( void )
 
 	/*    PORTC    */
 	//Set inputs and outputs
+	PORTC.OUTSET = USB_UART_RXD;
 	PORTC.DIRSET = MB_MOSI | MB_SCK | USB_UART_RXD;
 
 	/*    PORTD    */
 	//Set inputs and outputs
-	PORTD.DIRSET = FLASH_CS | LED0 | LED1;
 	PORTD.OUTSET = FLASH_CS | LED0 | LED1;
+	PORTD.DIRSET = FLASH_CS | LED0 | LED1;
 
 	/*    PORTE    */
 	//Set inputs and outputs
@@ -49,10 +55,10 @@ void MCU_Init( void )
 
 	//PORTC USART
 	USARTC0.CTRLA = USART_RXCINTLVL_LO_gc; // RX interrupt is enabled and low priority
-	USARTC0.CTRLB = USART_RXEN_bm | USART_TXEN_bm; // RX and TX enabled
 	USARTC0.CTRLC = USART_CHSIZE_8BIT_gc; // 8 data bits, no parity, 1 stop bit
 	USARTC0.BAUDCTRLA = BSELH;
 	USARTC0.BAUDCTRLB = BSCALE | BSELL;
+	USARTC0.CTRLB = USART_RXEN_bm | USART_TXEN_bm; // RX and TX enabled
 
 	//PORTD Timer0 - Channel C & D = LED0 & 1 respectively
 	TCD0.PER = 488; //Count to 488 before overflowing and reseting the counter
@@ -112,6 +118,8 @@ ISR(USARTC0_RXC_vect)
 		case 'R': CCP_RST();
 				  break;
 	}
+	
+	newrx = 1;
 }
 
 //TCD0 overflow interrupt. Timer frequency / Timer period = overflows per second.
